@@ -84,9 +84,9 @@ db.criate_db(sql)
 
 sql = '''
     CREATE TABLE IF NOT EXISTS episodes (
-        id VARCHAR PRIMARY KEY,
+        id VARCHAR(25) PRIMARY KEY,
         description TEXT,
-        link VARCHAR(255),
+        link VARCHAR(60),
         images VARCHAR
 )'''
 db.criate_db(sql)
@@ -95,7 +95,7 @@ db.criate_db(sql)
 for i in df.index:
     sql = f"""
         INSERT INTO episodes (id, description, link, images)
-        VALUES ($${df['id'][i]}$$, $${df['description'][i]}$$, $${df['external_urls'][i]}$$, $${df['images'][i]}$$);
+        VALUES ($${df['id'][i]}$$, $${df['description'][i]}$$, $${df['external_urls'][i]['spotify']}$$, $${df['images'][i]}$$);
     """ #% (df['id'][i], df['description'][i], df['external_urls'][i], df['images'][i])
     
     db.insert_db(sql)
