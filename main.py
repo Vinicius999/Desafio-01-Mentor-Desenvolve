@@ -78,7 +78,21 @@ df = pd.DataFrame(episodes)
 # Database Class
 db = Database()
 
-# Creating table
+# Creating tables
+sql = 'DROP TABLE IF EXISTS public.episode_images'
+db.criate_db(sql)
+
+sql = '''
+    CREATE TABLE IF NOT EXISTS images (
+        id INTEGER,
+        number INTEGER,
+        height INTEGER,
+        width INTEGER,
+        url VARCHAR(100),
+        PRIMARY KEY(id, number)
+)'''
+db.criate_db(sql)
+
 sql = 'DROP TABLE IF EXISTS public.episodes'
 db.criate_db(sql)
 
@@ -87,16 +101,26 @@ sql = '''
         id VARCHAR(25) PRIMARY KEY,
         description TEXT,
         link VARCHAR(60),
-        images VARCHAR
+        images INTEGER
 )'''
 db.criate_db(sql)
 
 # Inserting data in database
 for i in df.index:
+    for j, image in enumerate(df['images'][1]):
+        sql = f"""
+            INSERT INTO images (id, number, height, width, url)
+            VALUES ({i+1}, {j+1}, {image['height']}, {image['width']}, $${image['url']}$$);
+        """ 
+        
+        db.insert_db(sql)
+
+
+for i in df.index:
     sql = f"""
         INSERT INTO episodes (id, description, link, images)
-        VALUES ($${df['id'][i]}$$, $${df['description'][i]}$$, $${df['external_urls'][i]['spotify']}$$, $${df['images'][i]}$$);
-    """ #% (df['id'][i], df['description'][i], df['external_urls'][i], df['images'][i])
+        VALUES ($${df['id'][i]}$$, $${df['description'][i]}$$, $${df['external_urls'][i]['spotify']}$$, {i+1});
+    """ 
     
     db.insert_db(sql)
     
