@@ -79,20 +79,6 @@ df = pd.DataFrame(episodes)
 db = Database()
 
 # Creating tables
-sql = 'DROP TABLE IF EXISTS public.episode_images'
-db.criate_db(sql)
-
-sql = '''
-    CREATE TABLE IF NOT EXISTS images (
-        id INTEGER,
-        number INTEGER,
-        height INTEGER,
-        width INTEGER,
-        url VARCHAR(100),
-        PRIMARY KEY(id, number)
-)'''
-db.criate_db(sql)
-
 sql = 'DROP TABLE IF EXISTS public.episodes'
 db.criate_db(sql)
 
@@ -100,27 +86,41 @@ sql = '''
     CREATE TABLE IF NOT EXISTS episodes (
         id VARCHAR(25) PRIMARY KEY,
         description TEXT,
-        link VARCHAR(60),
-        images INTEGER
+        link VARCHAR(60)
+)'''
+db.criate_db(sql)
+
+
+sql = 'DROP TABLE IF EXISTS public.images'
+db.criate_db(sql)
+
+sql = '''
+    CREATE TABLE IF NOT EXISTS images (
+        id_episode VARCHAR(25),
+        number INTEGER,
+        height INTEGER,
+        width INTEGER,
+        url VARCHAR(100),
+        PRIMARY KEY (id_episode, number),
+        FOREIGN KEY (id_episode) REFERENCES episodes(id)
 )'''
 db.criate_db(sql)
 
 # Inserting data in database
 for i in df.index:
-    for j, image in enumerate(df['images'][1]):
-        sql = f"""
-            INSERT INTO images (id, number, height, width, url)
-            VALUES ({i+1}, {j+1}, {image['height']}, {image['width']}, $${image['url']}$$);
-        """ 
-        
-        db.insert_db(sql)
-
-
-for i in df.index:
     sql = f"""
-        INSERT INTO episodes (id, description, link, images)
-        VALUES ($${df['id'][i]}$$, $${df['description'][i]}$$, $${df['external_urls'][i]['spotify']}$$, {i+1});
+        INSERT INTO episodes (id, description, link)
+        VALUES ($${df['id'][i]}$$, $${df['description'][i]}$$, $${df['external_urls'][i]['spotify']}$$);
     """ 
     
     db.insert_db(sql)
+
+for id in df['id']:
+    for j, image in enumerate(df['images'][1]):
+        sql = f"""
+            INSERT INTO images (id_episode, number, height, width, url)
+            VALUES ($${id}$$, {j+1}, {image['height']}, {image['width']}, $${image['url']}$$);
+        """ 
+        
+        db.insert_db(sql)
     
