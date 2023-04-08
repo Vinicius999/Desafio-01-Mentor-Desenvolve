@@ -136,7 +136,11 @@ for id in df['id']:
         """ 
         
         db.insert_db(sql)
-        
-        
 
+# Querying data
+sql = 'SELECT * FROM public.images'
+images = db.select_db(sql)
+
+# Tranformando os dados da consulta no PostegreSQL em DataFrame
+df_images = pd.DataFrame(images, columns=['id_episode', 'number', 'height', 'width', 'url'])
     
