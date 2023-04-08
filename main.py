@@ -67,6 +67,17 @@ class Database:
             return 1
         self.cur.close()
         
+    def select_db(self, sql):
+        self.conn = self.connect_db()
+        self.cur = self.conn.cursor()
+        self.cur.execute(sql)
+        self.recset = self.cur.fetchall()
+        self.records = []
+        for rec in self.recset:
+            self.records.append(rec)
+        self.conn.close()
+        return self.records
+        
         
 # Authentication
 sp = authentication()
@@ -79,7 +90,7 @@ df = pd.DataFrame(episodes)
 db = Database()
 
 # Creating tables
-sql = 'DROP TABLE IF EXISTS public.episodes'
+sql = 'DROP TABLE IF EXISTS public.episodes CASCADE'
 db.criate_db(sql)
 
 sql = '''
@@ -103,6 +114,8 @@ sql = '''
         url VARCHAR(100),
         PRIMARY KEY (id_episode, number),
         FOREIGN KEY (id_episode) REFERENCES episodes(id)
+            ON DELETE CASCADE
+		    ON UPDATE CASCADE
 )'''
 db.criate_db(sql)
 
@@ -123,4 +136,7 @@ for id in df['id']:
         """ 
         
         db.insert_db(sql)
+        
+        
+
     
