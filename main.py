@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 import psycopg2
 import pandas as pd
+import requests
 
 
 def authentication():
@@ -137,14 +138,23 @@ for id in df['id']:
         
         db.insert_db(sql)
 
-# Querying data
-sql = 'SELECT * FROM public.images'
-images = db.select_db(sql)
 
 # Creating folder
 if not os.path.exists('images'):
     os.mkdir('images')
 
+# Querying data
+sql = 'SELECT id_episode, url FROM public.images'
+images = db.select_db(sql)
+
 # Tranformando os dados da consulta no PostegreSQL em DataFrame
-df_images = pd.DataFrame(images, columns=['id_episode', 'number', 'height', 'width', 'url'])
+df_images = pd.DataFrame(images, columns=['id', 'url'])
+
+for i, row in df_images.iterrows():
+    response = requests.get(row['url'])
+    image_filename = f"{id}_{i}.jpg"
+    image_path = os.path.join('images', image_filename)
+    
+    with open(image_path, 'wb') as f:
+        f.write(response.content)
     
