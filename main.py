@@ -129,11 +129,11 @@ for i in df.index:
     
     db.insert_db(sql)
 
-for id in df['id']:
-    for j, image in enumerate(df['images'][1]):
+for i, row in df.iterrows():
+    for j, image in enumerate(row['images']):
         sql = f"""
             INSERT INTO images (id_episode, number, height, width, url)
-            VALUES ($${id}$$, {j+1}, {image['height']}, {image['width']}, $${image['url']}$$);
+            VALUES ($${row['id']}$$, {j+1}, {image['height']}, {image['width']}, $${image['url']}$$);
         """ 
         
         db.insert_db(sql)
@@ -152,8 +152,14 @@ df_images = pd.DataFrame(images, columns=['id', 'url'])
 
 for i, row in df_images.iterrows():
     response = requests.get(row['url'])
-    image_filename = f"{id}_{i}.jpg"
-    image_path = os.path.join('images', image_filename)
+    image_filename = f"{row['id']}_{i}.jpg"
+    id = ''
+    if id != row['id']:
+        id = row['id']
+        path = f'images/{id}'
+        if not os.path.exists(f'{path}/'):
+            os.mkdir(f'{path}/')
+    image_path = os.path.join(f'images/{id}', image_filename)
     
     with open(image_path, 'wb') as f:
         f.write(response.content)
