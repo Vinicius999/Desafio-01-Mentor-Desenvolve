@@ -141,6 +141,10 @@ for id in df['id']:
 sql = 'SELECT * FROM public.images'
 images = db.select_db(sql)
 
+# Creating folder
+if not os.path.exists('images'):
+    os.mkdir('images')
+
 # Tranformando os dados da consulta no PostegreSQL em DataFrame
 df_images = pd.DataFrame(images, columns=['id_episode', 'number', 'height', 'width', 'url'])
     
