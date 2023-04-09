@@ -98,7 +98,8 @@ sql = '''
     CREATE TABLE IF NOT EXISTS episodes (
         id VARCHAR(25) PRIMARY KEY,
         description TEXT,
-        link VARCHAR(60)
+        link VARCHAR(60),
+        link_info VARCHAR(60)
 )'''
 db.criate_db(sql)
 
@@ -123,8 +124,8 @@ db.criate_db(sql)
 # Inserting data in database
 for i in df.index:
     sql = f"""
-        INSERT INTO episodes (id, description, link)
-        VALUES ($${df['id'][i]}$$, $${df['description'][i]}$$, $${df['external_urls'][i]['spotify']}$$);
+        INSERT INTO episodes (id, description, link, link_info)
+        VALUES ($${df['id'][i]}$$, $${df['description'][i]}$$, $${df['external_urls'][i]['spotify']}$$, $${df['href'][i]}$$);
     """ 
     
     db.insert_db(sql)
