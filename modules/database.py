@@ -1,4 +1,5 @@
 import psycopg2
+import psycopg2.extras
 
 
 class Database:
@@ -37,6 +38,14 @@ class Database:
             self.cur.close()
             return 1
         self.cur.close()
+    
+    def bulk_insert_db(self, sql, data):
+        self.conn = self.connect_db()
+        self.cur = self.conn.cursor()
+        psycopg2.extras.execute_values(self.cur, sql, data)
+        self.conn.commit()
+        self.cur.close()
+        self.conn.close()
         
     def select_db(self, sql):
         self.conn = self.connect_db()
