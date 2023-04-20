@@ -101,4 +101,4 @@ for i, row in df_images.iterrows():
     
     with open(image_path, 'wb') as f:
         f.write(response.content)
-    
+
