@@ -23,7 +23,6 @@ sp = spotipy.authentication()
 
 # Get episodes
 episodes = spotipy.get_all_episodes_with_python(sp)
-#df = pd.DataFrame(episodes)
 
 # Database Class
 db = Database(HOST, DATABASE, USER, PASSWORD)
@@ -104,4 +103,3 @@ for i, row in df_images.iterrows():
     
     with open(image_path, 'wb') as f:
         f.write(response.content)
-
