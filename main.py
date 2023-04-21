@@ -23,7 +23,7 @@ sp = spotipy.authentication()
 
 # Get episodes
 episodes = spotipy.get_all_episodes_with_python(sp)
-df = pd.DataFrame(episodes)
+#df = pd.DataFrame(episodes)
 
 # Database Class
 db = Database(HOST, DATABASE, USER, PASSWORD)
@@ -60,7 +60,7 @@ sql = '''
 db.criate_db(sql)
 
 # Inserting data in database
-for i in df.index:
+'''for i in df.index:
     sql = f"""
         INSERT INTO episodes (id, description, link, link_info)
         VALUES ($${df['id'][i]}$$, $${df['description'][i]}$$, $${df['external_urls'][i]['spotify']}$$, $${df['href'][i]}$$);
@@ -75,8 +75,25 @@ for i, row in df.iterrows():
             VALUES ($${row['id']}$$, {j+1}, {image['height']}, {image['width']}, $${image['url']}$$);
         """ 
 
-        db.insert_db(sql)
+        db.insert_db(sql)'''
+for ep in episodes:
+    sql = f"""
+        INSERT INTO episodes (id, description, link, link_info)
+        VALUES ($${ep['id']}$$, $${ep['description']}$$, $${ep['external_urls']['spotify']}$$, $${ep['href']}$$);
+    """
+    
+    db.insert_db(sql)
 
+for ep in episodes:
+    for i, image in enumerate(ep['images']):
+        sql = f"""
+            INSERT INTO images (id_episode, number, height, width, url)
+            VALUES ($${ep['id']}$$, {i+1}, {image['height']}, {image['width']}, $${image['url']}$$);
+        """ 
+
+        db.insert_db(sql)
+        
+        
 # Creating folder
 if not os.path.exists('images'):
     os.mkdir('images')
