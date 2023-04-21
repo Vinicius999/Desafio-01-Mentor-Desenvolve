@@ -76,24 +76,27 @@ for i, row in df.iterrows():
         """ 
 
         db.insert_db(sql)'''
+        
+episode = tuple()
+episode_list = list()
 for ep in episodes:
-    sql = f"""
-        INSERT INTO episodes (id, description, link, link_info)
-        VALUES ($${ep['id']}$$, $${ep['description']}$$, $${ep['external_urls']['spotify']}$$, $${ep['href']}$$);
-    """
+    episode = ep['id'], ep['description'], ep['external_urls']['spotify'], ep['href']
+    episode_list.append(episode)
     
-    db.insert_db(sql)
-
+image = tuple()
+image_list = list()
 for ep in episodes:
-    for i, image in enumerate(ep['images']):
-        sql = f"""
-            INSERT INTO images (id_episode, number, height, width, url)
-            VALUES ($${ep['id']}$$, {i+1}, {image['height']}, {image['width']}, $${image['url']}$$);
-        """ 
+    for j, im in enumerate(ep['images']):
+        image = ep['id'], j+1, im['height'], im['width'], im['url']
+        image_list.append(image)
 
-        db.insert_db(sql)
-        
-        
+
+sql = "INSERT INTO episodes (id, description, link, link_info) VALUES %s"
+db.bulk_insert_db(sql, episode_list)
+
+sql = "INSERT INTO images (id_episode, number, height, width, url) VALUES %s"
+db.bulk_insert_db(sql, image_list)
+
 # Creating folder
 if not os.path.exists('images'):
     os.mkdir('images')
