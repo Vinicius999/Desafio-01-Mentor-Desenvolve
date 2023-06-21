@@ -19,7 +19,7 @@ class Database:
         )
         return self.conn
         
-    def criate_db(self, sql):
+    def create_db(self, sql):
         self.conn = self.connect_db()
         self.cur = self.conn.cursor()
         self.cur.execute(sql)

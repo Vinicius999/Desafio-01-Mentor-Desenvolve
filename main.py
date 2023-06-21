@@ -29,7 +29,7 @@ db = Database(HOST, DATABASE, USER, PASSWORD)
 
 # Creating tables
 sql = 'DROP TABLE IF EXISTS public.episodes CASCADE'
-db.criate_db(sql)
+db.create_db(sql)
 
 sql = '''
     CREATE TABLE IF NOT EXISTS episodes (
@@ -38,11 +38,11 @@ sql = '''
         link VARCHAR(60),
         link_info VARCHAR(60)
 )'''
-db.criate_db(sql)
+db.create_db(sql)
 
 
 sql = 'DROP TABLE IF EXISTS public.images'
-db.criate_db(sql)
+db.create_db(sql)
 
 sql = '''
     CREATE TABLE IF NOT EXISTS images (
@@ -56,7 +56,7 @@ sql = '''
             ON DELETE CASCADE
 		    ON UPDATE CASCADE
 )'''
-db.criate_db(sql)
+db.create_db(sql)
 
 # Inserting data in database    
 episode = tuple()

@@ -6,8 +6,9 @@
     <a href="##Desafio">Desafio</a> |
     <a href="##Tecnologias">Tecnologias</a> |
     <a href="##Dados">Dados</a> |
-    <a href="##ETL">ETL</a>
+    <a href="##Projeto">Projeto</a>
 </p>
+
 
 ## Executar projeto
 
@@ -59,6 +60,40 @@ python3 main.py
 
 - Documentação: [documentação](https://developer.spotify.com/documentation/web-api)
 
-## ETL
+## Projeto
+
+Para se conectar e ler dados da API do Spotify, foi desenvolvida a classe `Spotipy`, contendo as funções de altenticação e busca de espisódios usando a biblioteca [spotipy](https://spotipy.readthedocs.io/en/2.22.1/):
+
+```python
+class Spotipy():
+    def __init__ (self, CLIENT_ID, CLIENT_SECRET):
+        self.CLIENT_ID = CLIENT_ID
+        self.CLIENT_SECRET = CLIENT_SECRET
+    
+    def authentication(self):
+        auth_manager = SpotifyClientCredentials(
+            client_id = self.CLIENT_ID,
+            client_secret = self.CLIENT_SECRET
+        )
+
+        self.sp = spotipy.Spotify(auth_manager = auth_manager)
+        return self.sp
+
+    def get_all_episodes_with_python(self, sp):
+        self.episodes = []
+        self.offset = 0
+        self.limit = 50  # max limit
+        self.market='BR' 
+        
+        while True:
+            self.results = sp.search(q='Python', type='episode', limit=self.limit, offset=self.offset, market=self.market)
+            self.episodes += self.results['episodes']['items']
+            self.offset += self.limit
+            if len(self.results['episodes']['items']) == 0:
+                break  
+        return self.episodes
+```
+
+
 
 <h4 align="center"> &#128679; README.md &#128640; em construção... &#128679; </h4>
