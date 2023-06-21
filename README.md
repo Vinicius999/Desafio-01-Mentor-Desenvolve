@@ -53,6 +53,9 @@ python3 main.py
 	<a href="https://pandas.pydata.org/" target="_blank" rel="noreferrer">
         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original-wordmark.svg" alt="Vini-streamlit" width="40" height="40" />
     </a>
+    <a href="https://www.postgresql.org/" target="_blank" rel="noreferrer">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="Vini-Postgress" height="40" width="40" >
+    </a>
 </p>
 
 ## Dados
