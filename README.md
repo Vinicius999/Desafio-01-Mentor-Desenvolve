@@ -63,7 +63,7 @@ python3 main.py
 
 ## Projeto ETL
 
-#### PARTE 1 - Utilizar Python para ler dados da [API do Spotify](https://developer.spotify.com/documentation/web-api/tutorials/getting-started) e encontrar episódios onde a palavra "Python" aparecer.
+### PARTE 1 - Utilizar Python para ler dados da [API do Spotify](https://developer.spotify.com/documentation/web-api/tutorials/getting-started) e encontrar episódios onde a palavra "Python" aparecer.
 
 ##### EXTRACT
 
@@ -99,7 +99,7 @@ class Spotipy():
         return self.episodes
 ```
 
-#### PARTE 2 - Armazenar no banco de dados Postgresql as seguintes informações: id do episodio, descrição, link, lista de imagens
+### PARTE 2 - Armazenar no banco de dados Postgresql as seguintes informações: id do episodio, descrição, link, lista de imagens
 
 ##### TRANSFORM
 
@@ -182,7 +182,7 @@ class Database:
         return self.records
 ```
 
-#### PARTE 3 - Baixar as imagens dos eposódios a partir da lista de imagens gravadas no banco de dados e gravar em um diretório dentro do projeto
+### PARTE 3 - Baixar as imagens dos eposódios a partir da lista de imagens gravadas no banco de dados e gravar em um diretório dentro do projeto
 
 Para o download das imagens, foi usada a biblioteca [requests](https://pypi.org/project/requests/), enquando a biblioteca [os](https://docs.python.org/3/library/os.html) foi usada para criação das pastas e gravação dos arquivos das imagens:
 ```Python
