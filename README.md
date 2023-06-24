@@ -1,12 +1,12 @@
-<h1 align="center"> Spotify API </h1>
+<h1 align="center"> ETL Spotify API </h1>
 
-<p align="center">Este repositório contém o 1º desafio da mentoria individual do <a href="https://desenvolve.grupoboticario.com.br/">Programa Desenvolve 2023 - Trilha Dados</a>. O desafio se tratou do desenvolvimento de um <strong>ETL</strong> simples, onde se buscou <strong>extrair, processar e carregar</strong> dados da API pública do Spotify em um banco de dados Postgresql, usando a linguagem Python. <p>
+<p align="center">Este repositório contém o 1º desafio da mentoria individual do <a href="https://desenvolve.grupoboticario.com.br/">Programa Desenvolve 2023 - Trilha Dados</a>. O desafio se trata do desenvolvimento de um <strong>ETL</strong> simples, onde se buscou <strong>extrair, processar e carregar</strong> dados da API pública do Spotify em um banco de dados PostgreSQL, usando a linguagem Python. <p>
 <p align="center">
-    <a href="##Executar projeto">Executar projeto</a> |
-    <a href="##Desafio">Desafio</a> |
-    <a href="##Tecnologias">Tecnologias</a> |
-    <a href="##Dados">Dados</a> |
-    <a href="##Projeto ETL">Projeto ETL</a>
+    <a href="https://github.com/Vinicius999/Spotify-API#executar-projeto">Executar projeto</a> |
+    <a href="https://github.com/Vinicius999/Spotify-API#desafio">Desafio</a> |
+    <a href="https://github.com/Vinicius999/Spotify-API#tecnologias">Tecnologias</a> |
+    <a href="https://github.com/Vinicius999/Spotify-API#dados">Dados</a> |
+    <a href="https://github.com/Vinicius999/Spotify-API#projeto-etl">Projeto ETL</a>
 </p>
 
 
